@@ -1,29 +1,51 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    private float _Time = 5;
-    private float extraTime;
-    public float ExtraTime { get => extraTime; set => extraTime = value; }
-    bool isTimeRun = true;
 
+    float _Time;
+    private GameController gController;
+    private UiController uiController;
+    bool isTimeRun = false;
+
+    private void Start()
+    {
+        gController = transform.GetComponent<GameController>();
+        uiController = transform.GetComponent<UiController>();
+    }
+
+    public void StartTimer(float time)
+    {
+        isTimeRun = true;
+        _Time = time;
+    }
 
 
     private void Update()
     {
-        if(isTimeRun)
+        uiController.SetTimeLeft(_Time);
+        if (isTimeRun)
         {
-            if(_Time > 0)
+            if (_Time > 0)
             {
                 _Time -= Time.deltaTime;
             }
             else
             {
                 isTimeRun = false;
-                print("Time is Out");
+                gController.Lose();
             }
         }
+    }
+    public float ReturnTime()
+    {
+        return _Time;
+    }
+    public void StopTimer()
+    {
+        isTimeRun = false;
     }
 }
