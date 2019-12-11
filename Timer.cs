@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
 
-    float _Time;
+    float _Time; // Time per game
+    bool isTimeRun = false;  //Switcher of timer
+
     private GameController gController;
     private UiController uiController;
-    bool isTimeRun = false;
+    
 
     private void Start()
     {
@@ -26,7 +28,7 @@ public class Timer : MonoBehaviour
 
     private void Update()
     {
-        uiController.SetTimeLeft(_Time);
+        uiController.SetTimeLeft(_Time); // Set time at UI
         if (isTimeRun)
         {
             if (_Time > 0)
@@ -36,11 +38,11 @@ public class Timer : MonoBehaviour
             else
             {
                 isTimeRun = false;
-                gController.Lose();
+                gController.Lose(); // if time Out -> Lose
             }
         }
     }
-    public float ReturnTime()
+    public float ReturnTime() 
     {
         return _Time;
     }

@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
 {
 
     UiController uiController;
+
     private int enemyLvl;
     private float enemyMaxHp;
     private float enemyCurentHp;
@@ -24,14 +25,14 @@ public class EnemyController : MonoBehaviour
         NewGame();
     }
 
-    void Respawn(float maxHp)
+    void Respawn(float maxHp) // Respawn enemy after kill
     {
         enemyMaxHp = maxHp;
         enemyCurentHp = maxHp;
         uiController.ChangeHpBar(1);
     }
 
-    void GetDamage(float damage)
+    void GetDamage(float damage) // Receive damage 
     {
         if(enemyCurentHp > 0)
         {
@@ -53,7 +54,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    private void OnMouseDown() //Action
     {
         if(!uiController.canvasEnd.activeSelf)
         {
@@ -66,7 +67,7 @@ public class EnemyController : MonoBehaviour
         
     }
 
-    void AnimManager(int Anim)
+    void AnimManager(int Anim) // Animation manager
     {
         switch(Anim)
         {
@@ -77,7 +78,8 @@ public class EnemyController : MonoBehaviour
 
         }
     }
-    public void NewGame()
+    
+    public void NewGame() // Start of new game
     {
         enemyMaxHp = 20;
         enemyLvl = 1;

@@ -6,14 +6,13 @@ using GoogleMobileAds.Api;
 public class GameController : MonoBehaviour
 {
     private float damage;
+    public float gameTime = 60; // Game time
     Timer timer;
     UiController uiController;
     EnemyController enemyContrl;
-    public float gameTime =60;
     
-    
-    private const string VideoId = "ca-app-pub-3940256099942544/5224354917";
-    private RewardBasedVideoAd rewardVideo;
+    private const string VideoId = "ca-app-pub-3940256099942544/5224354917"; //AD ID of reward video (test ID)
+    private RewardBasedVideoAd rewardVideo; // reward video
     
 
 
@@ -22,8 +21,8 @@ public class GameController : MonoBehaviour
         timer = transform.GetComponent<Timer>();
         uiController = transform.GetComponent<UiController>();
         enemyContrl = GameObject.Find("Enemy").transform.GetComponent<EnemyController>();
-        rewardVideo = RewardBasedVideoAd.Instance;
-        rewardVideo.OnAdRewarded += HandleUserEarnedReward;
+        rewardVideo = RewardBasedVideoAd.Instance; //Set instance of RW
+        rewardVideo.OnAdRewarded += HandleUserEarnedReward; // Event handler for reward
     }
     private void Start()
     { 
@@ -31,11 +30,11 @@ public class GameController : MonoBehaviour
     }
     private void Update()
     {
-        if (uiController.EnemyLeft() == 0) Victory();
+        if (uiController.EnemyLeft() == 0) Victory(); // if no enemy -> Victory
     }
-    private void GameStart()
+    private void GameStart()  //Start of Game
     {
-        rewardVideo.LoadAd(new AdRequest.Builder().Build(), VideoId);
+        rewardVideo.LoadAd(new AdRequest.Builder().Build(), VideoId); // Loading of AD
         uiController.ChangeEnemyLeft(10);
         timer.StartTimer(gameTime);
         enemyContrl.NewGame();
@@ -57,7 +56,7 @@ public class GameController : MonoBehaviour
     {
         uiController.ShowLose();
     }
-    public void Video()
+    public void Video() //Video Show method
     {
         if (rewardVideo.IsLoaded()) rewardVideo.Show();
     }
@@ -67,7 +66,7 @@ public class GameController : MonoBehaviour
     }
    
     
-    public void HandleUserEarnedReward(object sender, Reward args)
+    public void HandleUserEarnedReward(object sender, Reward args) //Event handler for reward
     {
         string type = args.Type;
         double amount = args.Amount;
